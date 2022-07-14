@@ -1,6 +1,6 @@
-
 Private Sub Lista_Click()
 
+Ñ1 = 0
 Cuenta = Me.Lista.ListCount
 Set Rango = Range("A1").CurrentRegion
 For i = 0 To Cuenta - 1
@@ -8,6 +8,7 @@ For i = 0 To Cuenta - 1
         Valor = Me.Lista.List(i)
         Sheets("bestsellerswithcategories").Range("B2").Value = Valor
     End If
+Ñ1 = 1
 Next i
 
 End Sub
@@ -18,7 +19,10 @@ Genre.List = Worksheets("bestsellerswithcategories").Range("P554:P555").Value
 End Sub
 Private Sub Cancel_Click()
     
-    Call RegresarAFiltro
+    If Ñ1 = 1 Then
+        Call RegresarAFiltro
+    Else
+    End If
     Unload Me
 
 End Sub
