@@ -1,0 +1,8 @@
+Private Sub Worksheet_Change(ByVal Target As Range)
+
+If Target.Row = 2 And Target.Column = 2 Then
+    
+Call FiltroAvanzado
+End If
+
+End Sub
