@@ -1,0 +1,27 @@
+Sub Botón1_Haga_clic_en()
+UserForm1.Show
+
+End Sub
+
+Sub FiltroAvanzado()
+'
+' FiltroAvanzado Macro
+'
+
+'
+    Range("bestsellerswithcategories[#All]").AdvancedFilter Action:= _
+        xlFilterInPlace, CriteriaRange:=Range("B1:B2"), Unique:=False
+End Sub
+
+
+Sub RegresarAFiltro()
+'
+' RegresarAFiltro Macro
+'
+
+'
+    Range("bestsellerswithcategories[#Headers]").Select
+    ActiveSheet.ShowAllData
+    Selection.AutoFilter
+    
+End Sub
