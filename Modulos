@@ -3,6 +3,7 @@ UserForm1.Show
 
 End Sub
 
+
 Sub FiltroAvanzado()
 '
 ' FiltroAvanzado Macro
@@ -13,6 +14,11 @@ Sub FiltroAvanzado()
         xlFilterInPlace, CriteriaRange:=Range("B1:B2"), Unique:=False
 End Sub
 
+
+
+Option Explicit
+
+Public Ñ1 As Integer
 
 Sub RegresarAFiltro()
 '
