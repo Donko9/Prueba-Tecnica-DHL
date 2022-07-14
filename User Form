@@ -1,0 +1,100 @@
+
+Private Sub Lista_Click()
+
+Cuenta = Me.Lista.ListCount
+Set Rango = Range("A1").CurrentRegion
+For i = 0 To Cuenta - 1
+    If Me.Lista.Selected(i) Then
+        Valor = Me.Lista.List(i)
+        Sheets("bestsellerswithcategories").Range("B2").Value = Valor
+    End If
+Next i
+
+End Sub
+
+
+Private Sub UserForm_Initialize()
+Genre.List = Worksheets("bestsellerswithcategories").Range("P554:P555").Value
+End Sub
+Private Sub Cancel_Click()
+    
+    Call RegresarAFiltro
+    Unload Me
+
+End Sub
+
+Private Sub RunQuery_Click()
+
+Me.Lista.Clear
+
+On Error GoTo Errores
+'
+If Me.Nombre.Value = "" Or Me.Author.Value = "" Or Me.User_Rating.Value = "" Or Me.Year.Value = "" Or Me.Genre.Value = "" Then
+'
+    MsgBox "Datos no ingresados, favor de intentarlo nuevamente.", vbInformation, "Aviso !!!"
+    '
+    Else
+    Me.Lista.Clear
+        Set HojaBase = ThisWorkbook.Sheets("bestsellerswithcategories")
+    '
+    Filas = HojaBase.Range("a3").CurrentRegion.Rows.Count
+    k = 1
+    f = 0
+    For i = 4 To Filas
+        If LCase(HojaBase.Cells(i, k).Offset(0, 1).Value) Like "*" & LCase(Me.Nombre.Value) & "*" Then
+            a = 1
+        Else
+            a = 0
+        End If
+        '
+        If LCase(HojaBase.Cells(i, k).Offset(0, 2).Value) Like "*" & LCase(Me.Author.Value) & "*" Then
+            b = 1
+        Else
+            b = 0
+        End If
+        '
+        If LCase(HojaBase.Cells(i, k).Offset(0, 3).Value) Like "*" & LCase(Me.User_Rating.Value) & "*" Then
+            c = 1
+        Else
+            c = 0
+        End If
+        '
+        If LCase(HojaBase.Cells(i, k).Offset(0, 6).Value) Like "*" & LCase(Me.Year.Value) & "*" Then
+            d = 1
+        Else
+            d = 0
+        End If
+        '
+        If LCase(HojaBase.Cells(i, k).Offset(0, 7).Value) Like "*" & LCase(Me.Genre.Value) & "*" Then
+            e = 1
+        Else
+            e = 0
+        End If
+        '
+        If a + b + c + d + e = 5 Then
+                    
+            f = 1
+            Me.Lista.AddItem HojaBase.Cells(i, k)
+            Me.Lista.List(Me.Lista.ListCount - 1, 1) = HojaBase.Cells(i, k).Offset(0, 1)
+            Me.Lista.List(Me.Lista.ListCount - 1, 2) = HojaBase.Cells(i, k).Offset(0, 2)
+            Me.Lista.List(Me.Lista.ListCount - 1, 3) = HojaBase.Cells(i, k).Offset(0, 3)
+            Me.Lista.List(Me.Lista.ListCount - 1, 4) = HojaBase.Cells(i, k).Offset(0, 6)
+        Else
+        End If
+        
+    Next i
+    
+    If f = 1 Then
+        
+    Else
+        MsgBox "Su búsqueda no regreso ningún resultado.", vbCritical, "AVISO!!!"
+    End If
+    
+End If
+'
+Exit Sub
+Errores:
+MsgBox "policia?.", vbExclamation, "AVISO!!!"
+
+End Sub
+
